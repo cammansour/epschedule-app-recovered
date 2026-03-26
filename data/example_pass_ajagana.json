@@ -1,0 +1,45 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.eps.epschedule",
+  "serialNumber": "20305519",
+  "teamIdentifier": "YOUR_TEAM_ID",
+  "organizationName": "Eastside Preparatory School",
+  "description": "Student ID Card",
+  "logoText": "EPS",
+  "foregroundColor": "rgb(0, 0, 0)",
+  "backgroundColor": "rgb(255, 255, 255)",
+  "expirationDate": "2027-01-23T23:59:59Z",
+  "generic": {
+    "primaryFields": [
+      {
+        "key": "name",
+        "label": "Name",
+        "value": "AJ Jagana"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "id",
+        "label": "Student ID",
+        "value": "20305519"
+      },
+      {
+        "key": "grad_year",
+        "label": "Class of",
+        "value": "2030"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "key": "email",
+        "label": "Email",
+        "value": "ajagana@eastsideprep.org"
+      }
+    ]
+  },
+  "barcode": {
+    "message": "20305519",
+    "format": "PKBarcodeFormatCode128",
+    "messageEncoding": "iso-8859-1"
+  }
+}

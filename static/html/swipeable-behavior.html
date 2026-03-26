@@ -1,0 +1,75 @@
+<script>
+  SwipeableBehavior = {
+    listeners: {
+      transitionend: "_transitionEnd",
+    },
+    properties: {
+      swipeDisabled: {
+        type: Boolean,
+        value: false,
+      },
+    },
+    dest: null,
+    handleTrack: function (e) {
+      console.log("This  is running - swipe disabled is " + this.swipeDisabled);
+      if (this.swipeDisabled) {
+        return;
+      }
+      switch (e.detail.state) {
+        case "start":
+          this._enableTransition(false);
+          this.axis = Math.abs(e.detail.dx) > Math.abs(e.detail.dy) ? "x" : "y";
+          break;
+        case "track":
+          if (this.axis == "x") {
+            this._translateX(e.detail.dx);
+          }
+          break;
+        case "end":
+          this.axis = undefined;
+          this._enableTransition(true);
+          this._maybeSwipe(e.detail.dx);
+          break;
+      }
+    },
+    _enableTransition: function (enable) {
+      if (enable) {
+        this.classList.remove("no-transition");
+      } else {
+        this.classList.add("no-transition");
+      }
+    },
+    _translateX: function (x) {
+      var s = this.style;
+      var translate = "translate3d(" + x + "px,0,0)";
+      s.transform = s.webkitTransform = translate;
+    },
+    _maybeSwipe: function (dx) {
+      this.swiped = Math.abs(dx) > this.offsetWidth / 4;
+      if (this.swiped) {
+        this.dest =
+          ((window.innerWidth + this.offsetWidth + 1) / 2) *
+          (dx / Math.abs(dx));
+        this._translateX(this.dest);
+      } else {
+        this._translateX(0);
+      }
+    },
+    _transitionEnd: function (e) {
+      if (this.swiped) {
+        var dir = this.dest < 0 ? "left" : "right";
+        this.fire("swiped", { direction: dir });
+        this.swiped = false;
+        this._enableTransition(false);
+        this._translateX(-this.dest);
+        this.dest = null;
+
+        var that = this;
+        setTimeout(function () {
+          that._enableTransition(true);
+          that._translateX(0);
+        }, 0);
+      }
+    },
+  };
+</script>
